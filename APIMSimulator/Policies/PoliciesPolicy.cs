@@ -35,4 +35,18 @@ public class PoliciesPolicy : Policy
             _onError.Parent = value?._onError;
         }
     }
+
+    internal override void Execute(Context context)
+    {
+        try
+        {
+            _inbound.Execute(context);
+            _backend.Execute(context);
+            _outbond.Execute(context);
+        }
+        catch
+        {
+            _onError.Execute(context);
+        }
+    }
 }

@@ -16,4 +16,9 @@ internal class SetBodyPolicy : Policy
     {
         message.Body = new HttpMessageBody() { Body = _expression.Execute(context) as string ?? string.Empty };
     }
+
+    internal override void Execute(Context context)
+    {
+        Caculate(context, context.Response);
+    }
 }

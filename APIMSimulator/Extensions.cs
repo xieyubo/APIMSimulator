@@ -10,7 +10,7 @@ internal static class Extensions
     public static Dictionary<TKey, TValue> AddOrUpdate<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value)
         where TKey : notnull
     {
-        if (dict.Keys.Contains(key))
+        if (!dict.Keys.Contains(key))
         {
             dict.Add(key, value);
         }

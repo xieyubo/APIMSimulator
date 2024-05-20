@@ -9,6 +9,18 @@ public class HttpMessageBody : IMessageBody
 
     public T As<T>(bool preserveContent = false)
     {
+        string content = Body;
+
+        if (!preserveContent)
+        {
+            Body = string.Empty;
+        }
+
+        if (typeof(T) == typeof(string))
+        {
+            return (T)(object)content;
+        }
+
         throw new NotImplementedException();
     }
 
