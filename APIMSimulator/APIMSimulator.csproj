@@ -1,10 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>APIMSimulator</PackageId>
+    <Version>0.0.2-alpha</Version>
+    <Authors>xyb</Authors>
+    <Description>This package is a POC for enabling Azure API Management local testing.</Description>
     <AssemblyName>APIMSimulator</AssemblyName>
     <RootNamespace>APIMSimulator</RootNamespace>
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
+    <RepositoryUrl>https://github.com/xieyubo/APIMSimulator</RepositoryUrl>
+    <PackageReleaseNotes>It's not a stable release. API might change without notification.</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
@@ -12,6 +19,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />

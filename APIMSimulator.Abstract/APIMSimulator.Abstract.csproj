@@ -5,7 +5,20 @@
     <RootNamespace>APIMSimulator.Abstract</RootNamespace>
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
+    <PackageId>APIMSimulator.Abstract</PackageId>
+    <Version>0.0.1-alpha</Version>
+    <Authors>xyb</Authors>
+    <Description>This package is a POC for enabling Azure API Management local testing.</Description>
+    <RepositoryUrl>https://github.com/xieyubo/APIMSimulator</RepositoryUrl>
+    <PackageReleaseNotes>It's not a stable release. API might change without notification.</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
   </ItemGroup>
