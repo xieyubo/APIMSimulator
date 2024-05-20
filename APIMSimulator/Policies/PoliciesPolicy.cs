@@ -44,6 +44,10 @@ public class PoliciesPolicy : Policy
             _backend.Execute(context);
             _outbond.Execute(context);
         }
+        catch (Exception ex) when (ex is ReturnResponseException)
+        {
+            throw;
+        }
         catch
         {
             _onError.Execute(context);
