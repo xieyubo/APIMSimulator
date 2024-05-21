@@ -1,5 +1,4 @@
 ﻿using APIMSimulator.Policies;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,23 +10,16 @@ namespace APIMSimulator;
 
 public class PolicyBuilder
 {
-    public IServiceProvider ServiceProvider { get; }
-
     internal Dictionary<string, FragmentPolicy> Fragments { get; } = new Dictionary<string, FragmentPolicy>();
 
-    public PolicyBuilder(IServiceProvider sp)
-    {
-        ServiceProvider = sp;
-    }
-
-    public Policy Build(XElement element)
+    internal Policy Build(XElement element)
     {
         var policyName = GetPolicyName(element)!;
         if (!Policies.TryGetValue(policyName, out var policyType))
         {
             throw new Exception($"Policy '{element.Name}' is not supported.");
         }
-        return (Policy)ActivatorUtilities.CreateInstance(ServiceProvider, policyType, new object[] { element, this });
+        return (Policy)Activator.CreateInstance(policyType, [element, this]);
     }
 
     public T? TryParseNextPolicy<T>(ref XElement? element)
@@ -64,15 +56,26 @@ public class PolicyBuilder
         return policies.ToArray();
     }
 
-    public T BuildFromXmlFile<T>(string xmlPath)
+    public T BuildFromXmlFile<T>(string xmlFilePath)
+        where T : Policy
+    {
+        return TryBuildFromXmlString<T>(File.ReadAllText(xmlFilePath)) ?? throw new Exception($"'{xmlFilePath}' doesn't contain valid {typeof(T).Name}.");
+    }
+
+    public T? TryBuildFromXmlString<T>(string xmlString)
        where T : Policy
     {
-        var policy = Build(XElement.Parse(File.ReadAllText(xmlPath))) as T;
-        if (policy == null)
+        XElement element;
+        try
         {
-            throw new Exception($"'{xmlPath}' doesn't contain valid {typeof(T).Name}.");
+            element = XElement.Parse(xmlString);
         }
-        return policy;
+        catch
+        {
+            element = XElement.Parse(PolicyUtils.ConvertPolicyToStandardXmlString(xmlString));
+        }
+
+        return Build(element) as T;
     }
 
     private string? GetPolicyName(XElement element)

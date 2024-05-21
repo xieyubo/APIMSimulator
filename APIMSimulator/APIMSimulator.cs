@@ -1,30 +1,16 @@
 ﻿using APIMSimulator.Policies;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Xml.Linq;
 
 namespace APIMSimulator;
 
 public class APIMSimulator
 {
-    private Dictionary<string, FragmentPolicy> _fragments = new ();
     private PoliciesPolicy? _allAPIs;
-    private PolicyBuilder _policyBuilder;
-
-    public APIMSimulator(IServiceProvider sp)
-    {
-        _policyBuilder = new PolicyBuilder(sp);
-    }
+    private PolicyBuilder _policyBuilder = new PolicyBuilder();
 
     public void SetAllAPIsPolicy(string xmlPath)
     {
-        var policies = _policyBuilder.Build(XElement.Parse(File.ReadAllText(xmlPath))) as PoliciesPolicy;
-        if (policies == null)
-        {
-            throw new Exception($"'{xmlPath}' doesn't contain valid policies policy.");
-        }
-        _allAPIs = policies;
+        _allAPIs = _policyBuilder.BuildFromXmlFile<PoliciesPolicy>(xmlPath);
     }
 
     public IApi AddApi(string? xmlPathForAllOperations = null)

@@ -38,8 +38,6 @@ public abstract class Policy
         ChildPolicies.ForEach(e => e.Execute(context));
     }
 
-    protected IServiceProvider ServierProvider { get; private set; }
-
     protected List<Policy> ChildPolicies { get; private set; }
 
     protected Policy(XElement element, PolicyBuilder builder)
@@ -51,7 +49,6 @@ public abstract class Policy
     {
         Element = element;
         Name = element.Name.ToString();
-        ServierProvider = builder.ServiceProvider;
         ChildPolicies = parseChildPolicies ? element.Elements().Select(e => builder.Build((XElement)e)).ToList() : new ();
     }
 
