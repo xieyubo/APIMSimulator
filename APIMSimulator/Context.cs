@@ -1,4 +1,5 @@
 ﻿using APIMSimulator.Abstract;
+using APIMSimulator.Policies;
 using System.Collections.Generic;
 
 namespace APIMSimulator;
@@ -15,11 +16,13 @@ internal class Context : IContext
 
     internal HttpRequest Request { get; }
 
-    internal HttpResponse Response { get; } = new HttpResponse();
+    internal HttpResponse Response { get; set; } = new HttpResponse();
 
     internal Dictionary<string, object?> Variables { get; set; } = new Dictionary<string, object?>();
 
     internal APIMSimulator Simulator { get; }
+
+    internal string? BackendServiceUri { get; set; }
 
     public Context(APIMSimulator simulator, HttpRequest request)
     {

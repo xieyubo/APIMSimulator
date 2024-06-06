@@ -11,7 +11,7 @@ public class SendRequestPolicy : Policy
         HttpResponse OnSendRequest(HttpRequest request);
     }
 
-    public ICallback? Callback;
+    public ICallback? Callback { get; set; }
 
     private string _mode;
     private string _responseVariableName;

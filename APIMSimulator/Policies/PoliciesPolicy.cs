@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Xml.Linq;
 
 namespace APIMSimulator.Policies;
@@ -48,8 +49,10 @@ public class PoliciesPolicy : Policy
         {
             throw;
         }
-        catch
+        catch (Exception ex)
         {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.Body = new HttpMessageBody() { Body = ex.Message };
             _onError.Execute(context);
         }
     }
