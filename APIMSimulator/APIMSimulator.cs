@@ -5,12 +5,13 @@ namespace APIMSimulator;
 
 public class APIMSimulator
 {
-    private PoliciesPolicy? _allAPIs;
+    public PoliciesPolicy? AllAPIs { get; internal set; }
+
     private PolicyBuilder _policyBuilder = new PolicyBuilder();
 
     public void SetAllAPIsPolicy(string xmlPath)
     {
-        _allAPIs = _policyBuilder.BuildFromXmlFile<PoliciesPolicy>(xmlPath);
+        AllAPIs = _policyBuilder.BuildFromXmlFile<PoliciesPolicy>(xmlPath);
     }
 
     public IApi AddApi(string? xmlPathForAllOperations = null)
@@ -33,7 +34,7 @@ public class APIMSimulator
                     </on-error>
                 </policies>
             """));
-        allOperationsPolicy.Parent = _allAPIs;
+        allOperationsPolicy.Parent = AllAPIs;
         return new Api(this, allOperationsPolicy, _policyBuilder);
     }
 
