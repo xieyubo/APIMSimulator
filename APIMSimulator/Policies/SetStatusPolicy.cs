@@ -22,7 +22,12 @@ internal class SetStatusPolicy : Policy
 
     public void Caculate(Context context, HttpResponse message)
     {
-        message.StatusCode = int.Parse(_code.Execute(context) as string);
-        message.StatusReason = _code.Execute(context) as string ?? throw new Exception("reason of set-status can't be null.");
+        var obj = _code.Execute(context) ?? throw new Exception($"'code' of '{Name}' can't be null");
+        if (!(obj is int) && !(obj is string))
+        {
+            throw new Exception($"'code' of '{Name}' is invalid.");
+        }
+        message.StatusCode = obj is string ? int.Parse((string)obj) : (int)obj;
+        message.StatusReason = _reason.Execute(context) as string ?? throw new Exception("reason of set-status can't be null.");
     }
 }

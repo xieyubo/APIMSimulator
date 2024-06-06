@@ -9,7 +9,7 @@ internal class OutboundPolicy : Policy
     {
         set
         {
-            ChildPolicies.Where(p => p is BasePolicy).Select(p => ((BasePolicy)p).Parent = value);
+            ChildPolicies.Where(p => p is BasePolicy).ForEach(p => ((BasePolicy)p).Parent = value);
         }
     }
 

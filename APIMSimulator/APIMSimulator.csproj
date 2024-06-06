@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>APIMSimulator</PackageId>
-    <Version>0.0.6-alpha</Version>
+    <Version>0.0.7-alpha</Version>
     <Authors>xyb</Authors>
     <Description>This package is a POC for enabling Azure API Management local testing.</Description>
     <AssemblyName>APIMSimulator</AssemblyName>
